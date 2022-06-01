@@ -1,36 +1,52 @@
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { useState, useRef } from "react";
+import React from "react";
+import { AccessTokenContext } from "../../contexts/accessTokenContext";
+import { useContext } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import LoginResults from './LoginResults.js';
-import '../../App.css'
+function Login() {
+  const navigate = useNavigate();
+  const { accessToken, setAccessToken } = useContext(AccessTokenContext);
 
-function Login(props) {
+  const onClick = (e) => {
+    e.preventDefault();
 
-  const [usr, setUsr] = useState(null);
-    const [pass, setPass] = useState(null);
+    fetch("http://localhost:9000/spotify")
+      .then((res) => {
+        res.json();
+        console.log(res.url);
+      })
+      .then((data) => {
+        console.log(data.url);
+        window.open(data.url);
+      });
+    console.log(window.location.href);
+    console.log(path);
+  };
 
-    const textFieldRef1 = useRef();
-    const textFieldRef2 = useRef();
+  const path = window.location.href.split("/")[4];
 
-    const handleClick = (param1, param2) => {
-        setUsr(param1);
-        setPass(param2);
+  let code = "";
+  useEffect(() => {
+    if (path) {
+      code = path.split("=")[1];
+      fetch("http://localhost:9000/spotify/callback?code=" + code)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            setAccessToken(data.token);
+            console.log(data.token);
+            navigate("/home");
+          }
+        });
     }
+  }, []);
 
-    return(
-    <>
-        <div>
-        <Stack spacing={2}>
-            <TextField id="username" label="Username" type="search" color="success" inputRef={textFieldRef1} size="small"/>
-            <TextField id="password" label="Password" type="search" color="success" inputRef={textFieldRef2} size="small"/>
-            <Button variant="contained" size="medium" color="success" onClick={() => handleClick(textFieldRef1.current.value, textFieldRef2.current.value)}>Submit</Button>
-        </Stack>  
-            {usr && pass && <LoginResults logIn={props.logIn} user={usr} pass={pass}/>} 
-        </div>
-    </>
-    );
+  return (
+    <div>
+      <button onClick={(e) => onClick(e)}>Log in to App</button>
+    </div>
+  );
 }
 
-export default Login
+export default Login;
