@@ -1,3 +1,4 @@
+import "./Navbar.css";
 import { Link, Outlet } from "react-router-dom";
 import { useState, useEffect}  from "react";
 
@@ -13,7 +14,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 function Navbar() {
   return (
-    <div >
+    <div className = "links">
       <nav>
       <Button variant="contained" color="success">
         <Link to="/">Home</Link>
