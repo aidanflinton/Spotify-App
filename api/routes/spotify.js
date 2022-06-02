@@ -18,7 +18,6 @@ router.get("/", async (req, res, next) => {
       redirect_uri +
       "&scope=" +
       scope;
-    console.log(url);
     res.status(200).json({ url: url });
   } catch (err) {
     console.log(err);
@@ -29,7 +28,6 @@ router.get("/", async (req, res, next) => {
 router.get("/callback", async (req, res, next) => {
   try {
     const code = req.query.code;
-    console.log(req.query);
     const url =
       "https://accounts.spotify.com/api/token?grant_type=authorization_code&code=" +
       code +
@@ -45,9 +43,7 @@ router.get("/callback", async (req, res, next) => {
       .catch((err) => console.log(err))
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data)
         obj = {
-          url: "http://localhost:3000/",
           token: data.access_token,
         };
         return obj;

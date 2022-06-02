@@ -1,5 +1,4 @@
 import { Outlet, Link, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
 import "./App.css";
 import AccessTokenProvider from "./contexts/accessTokenContext";
 
@@ -15,8 +14,6 @@ import Login from "./components/userinfo/Login";
 import Navbar from "./components/Navbar";
 
 export default function App() {
-  const [login, setLogin] = useState();
-
   return (
     <>
       <AccessTokenProvider>
@@ -24,7 +21,7 @@ export default function App() {
           <h1>Spotify Social</h1>
 
           <Routes>
-            <Route path="/" element={<Navbar loggedIn={login} />}>
+            <Route path="/" element={<Navbar />}>
               <Route index element={<Home />} />
               <Route path="discover" element={<Discover />} />
               <Route path="forum" element={<Forum />} />
@@ -33,10 +30,7 @@ export default function App() {
               <Route path="artists" element={<TopArtists />} />
               <Route path="songs" element={<TopSongs />} />
               <Route path="profile" element={<UserProfile />} />
-              <Route
-                path="login"
-                element={<Login loggedIn={login} logIn={setLogin} />}
-              />
+              <Route path="login" element={<Login />} />
 
               <Route
                 path="*"
