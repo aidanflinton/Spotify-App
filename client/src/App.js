@@ -11,6 +11,9 @@ import TopSongs from "./components/userinfo/TopSongs";
 import UserProfile from './components/userinfo/UserProfile';
 import Login from './components/userinfo/Login';
 import Navbar from './components/Navbar';
+import RapForum from './components/forum/RapForum';
+import PopForum from './components/forum/PopForum';
+import CountryForum from './components/forum/CountryForum';
 
 export default function App() {
   return (
@@ -31,6 +34,9 @@ export default function App() {
         <Route path="songs" element={<TopSongs />} />
         <Route path="profile" element={<UserProfile />} />
         <Route path="login" element={<Login />} />
+        <Route path="RapForum" element={<RapForum />} />
+        <Route path="PopForum" element={<PopForum />} />
+        <Route path="CountryForum" element={<CountryForum />} />
         <Route
           path="*"
           element={
