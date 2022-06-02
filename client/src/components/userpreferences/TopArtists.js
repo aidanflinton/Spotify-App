@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AccessTokenContext } from "../../contexts/accessTokenContext";
 import {
   TableContainer,
   Table,
@@ -16,11 +17,28 @@ import {
 } from "@mui/material";
 
 function TopArtists() {
-  const [term, setTerm] = useState("");
+  const [term, setTerm] = useState("short_term");
 
   const handleChange = (event) => {
     setTerm(event.target.value);
   };
+
+  const [topArtists, setTopArtists] = useState();
+
+  const { accessToken, setAccessToken } = useContext(AccessTokenContext);
+
+  useEffect(() => {
+    fetch(
+      "http://localhost:9000/spotify/top-artists?token=" +
+        accessToken +
+        "&timeRange=" +
+        term
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setTopArtists(data);
+      });
+  }, [accessToken, term]);
 
   return (
     <div className="App">
@@ -36,17 +54,15 @@ function TopArtists() {
             label="Term"
             onChange={handleChange}
           >
-            <MenuItem color="success" value={topArtists1Mo}>
-              Last month
-            </MenuItem>
-            <MenuItem value={topArtists6Mo}>Last year</MenuItem>
-            <MenuItem value={topArtistsAllTime}>All Time</MenuItem>
+            <MenuItem value={"short_term"}>Last month</MenuItem>
+            <MenuItem value={"medium_term"}>Last year</MenuItem>
+            <MenuItem value={"long_term"}>All Time</MenuItem>
           </Select>
           <FormHelperText color="success">Error</FormHelperText>
         </FormControl>
       </Box>
 
-      {term && (
+      {topArtists && (
         <TableContainer component={Paper}>
           <Table aria-label="LikedArtists">
             <TableHead>
@@ -57,8 +73,8 @@ function TopArtists() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {term.items.length > 0 &&
-                term.items.map((artist) => (
+              {topArtists.items.length > 0 &&
+                topArtists.items.map((artist) => (
                   <TableRow
                     key={artist.name}
                     sx={{ "&:last-child td, &:last-childth": { border: 0 } }}

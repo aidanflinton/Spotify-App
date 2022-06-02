@@ -39,17 +39,17 @@ function Navbar(props) {
             </Link>
           </Button>
         )}
-        {accessToken && accessToken && (
-          <Button variant="contained" color="success">
-            <Link to="/artists" style={linkStyle}>
-              Top Artists
-            </Link>
-          </Button>
-        )}
         {accessToken && (
           <Button variant="contained" color="success">
             <Link to="/songs" style={linkStyle}>
               Top Songs
+            </Link>
+          </Button>
+        )}
+        {accessToken && accessToken && (
+          <Button variant="contained" color="success">
+            <Link to="/artists" style={linkStyle}>
+              Top Artists
             </Link>
           </Button>
         )}

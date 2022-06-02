@@ -16,17 +16,12 @@ const LikedSongs = () => {
   const { accessToken, setAccessToken } = useContext(AccessTokenContext);
 
   useEffect(() => {
-    if (accessToken) {
-      console.log(accessToken);
-      fetch("http://localhost:9000/spotify/saved-tracks?token=" + accessToken)
-        .then((res) => res.json())
-        .then((data) => {
-          setSavedSongs(data);
-          console.log(data);
-        });
-    } else {
-    }
-  }, []);
+    fetch("http://localhost:9000/spotify/saved-tracks?token=" + accessToken)
+      .then((res) => res.json())
+      .then((data) => {
+        setSavedSongs(data);
+      });
+  }, [accessToken]);
 
   return (
     <div className="App">
