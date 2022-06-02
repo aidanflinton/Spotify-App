@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Helmet } from "react-helmet";
 
 function UserProfile() {
   return (
-    <div>UserProfile</div>
-  )
+    <div>
+      <Helmet>
+        <title>Profile</title>
+      </Helmet>
+      UserProfile
+    </div>
+  );
 }
 
-export default UserProfile
+export default UserProfile;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AccessTokenContext } from "../../contexts/accessTokenContext";
+import { Helmet } from "react-helmet";
 import {
   TableContainer,
   Table,
@@ -42,6 +43,9 @@ function TopSongs() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Top Songs</title>
+      </Helmet>
       <Box sx={{ m: 1, minWidth: 120 }}>
         <FormControl success fullWidth>
           <InputLabel color="success" id="demo-simple-select-label">
