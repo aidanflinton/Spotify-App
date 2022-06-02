@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Helmet } from "react-helmet";
 
 function Forum() {
   return (
-    <div>Forum</div>
-  )
+    <div>
+      <Helmet>
+        <title>Forum</title>
+      </Helmet>
+      Forum
+    </div>
+  );
 }
 
-export default Forum
+export default Forum;

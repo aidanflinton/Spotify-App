@@ -1,4 +1,4 @@
-import { Outlet, Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import "./App.css";
 import AccessTokenProvider from "./contexts/accessTokenContext";
 
