@@ -3,11 +3,13 @@ import { Button, Stack, TextField } from '@mui/material';
 import axios from "axios";
 import "./Discover.css"
 import { width } from '@mui/system';
+import UserCard from './UserCard';
 
 function Discover() {
   const [users, setUsers] = useState();
   const [username, setUsername] = useState("");
   const [foundUser, setFoundUser] = useState();
+  const [display, setDisplay] = useState("");
   //let users = null;
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function Discover() {
       console.log(subUsers);
       subUsers = subUsers.filter((user) => user.is_public);
       console.log(subUsers);
-      setUsers(subUsers.map((user) => user.user_id));
+      setUsers(subUsers.map((user) => user.user_id).join("\n\n"));
       console.log(users);
       console.log(users? users : "null");
     })
@@ -49,12 +51,26 @@ function Discover() {
     // .catch((err) => console.log(err))
   }
 
+  const displayList = (arr) => {
+    arr.forEach((name) => {
+      return (
+        <>
+          {name}
+          <Button variant="contained" onClick={() => getUser()}>Get</Button>
+        </>        
+      )
+    })
+  }
+
   return (
     <div className = "container">
       <div className = "header">Discover</div>
+      <br />
       <div className = "body">
         <div className = "directory">
-          {users? users : null}
+          <div className = "element">
+            {users? users : null}
+          </div>
         </div>
         <div className = "search">
           <Stack>
