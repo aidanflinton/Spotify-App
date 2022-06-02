@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import { Helmet } from "react-helmet";
 
 function Discover() {
   return (
-    <div>Discover</div>
-  )
+    <div>
+      <Helmet>
+        <title>Discover</title>
+      </Helmet>
+      Discover
+    </div>
+  );
 }
 
-export default Discover
+export default Discover;

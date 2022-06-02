@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AccessTokenContext } from "../../contexts/accessTokenContext";
+import { Helmet } from "react-helmet";
 import {
   TableContainer,
   Table,
@@ -19,12 +20,16 @@ const LikedSongs = () => {
     fetch("http://localhost:9000/spotify/saved-tracks?token=" + accessToken)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setSavedSongs(data);
       });
   }, [accessToken]);
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Liked Songs</title>
+      </Helmet>
       {likedSongs && (
         <TableContainer component={Paper}>
           <Table aria-label="LikedSongs">
