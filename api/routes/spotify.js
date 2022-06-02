@@ -55,4 +55,18 @@ router.get("/callback", async (req, res, next) => {
   }
 });
 
+router.get("/saved-tracks", (req, res, next) => {
+  try {
+    const url = "https://api.spotify.com/v1/me/tracks";
+    fetch(url, {
+      headers: { Authorization: "Bearer " + req.query.token },
+    })
+      .catch((err) => console.log("saved-tracks", err))
+      .then((res) => res.json())
+      .then((result) => res.status(200).send(result));
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 module.exports = router;
