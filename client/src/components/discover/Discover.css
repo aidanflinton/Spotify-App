@@ -1,8 +1,14 @@
 .container {
-    width: 100%;
+    width: 84em;
     padding: 0;
     margin: 0;
-    left: 0;
+    border: 0;
+    background-color: white;
+    margin-top: 2em;
+    padding-top: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+    /* display: grid;
+    grid-template-columns: 1fr; */
 }
 .header {
     text-align: center;
@@ -13,12 +19,18 @@
 
 .directory {
     width: 75%;
+    text-align: left;
+    padding-left: 8em;
 }
 
 .element {
     white-space: pre;
+    text-align: left;
+    padding-left: 10em;
+    font-size: larger;
 }
 
 .search {
     width: 25%;
+    border: 1px solid black;
 }
