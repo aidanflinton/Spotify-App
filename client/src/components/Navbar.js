@@ -34,7 +34,7 @@ function Navbar() {
         <Link to="/songs">Top Songs</Link>
       </Button>
       <Button variant="contained" color="success">
-        <Link to="/profile">Profile</Link>
+        <Link to="/inbox">Inbox</Link>
       </Button>
       <Button variant="contained" color="success">
         <Link to="/profile">Profile</Link>
