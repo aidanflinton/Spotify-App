@@ -3,9 +3,11 @@ import "./App.css";
 import AccessTokenProvider from "./contexts/accessTokenContext";
 
 import Discover from "./components/discover/Discover";
+
 import Forum from "./components/forum/Forum";
 import Home from "./components/Home";
 import Inbox from "./components/inbox/Inbox";
+import InboxDetail from './components/inbox/InboxDetail';
 import LikedSongs from "./components/userpreferences/LikedSongs";
 import TopArtists from "./components/userpreferences/TopArtists";
 import TopSongs from "./components/userpreferences/TopSongs";
@@ -13,9 +15,11 @@ import UserProfile from "./components/userinfo/UserProfile";
 import Login from "./components/userinfo/Login";
 import Navbar from "./components/Navbar";
 
+
 export default function App() {
   return (
     <>
+
       <AccessTokenProvider>
         <div className="App">
           <h1>Spotify Social</h1>
@@ -26,6 +30,7 @@ export default function App() {
               <Route path="discover" element={<Discover />} />
               <Route path="forum" element={<Forum />} />
               <Route path="inbox" element={<Inbox />} />
+              <Route path="inbox/detail" element={<InboxDetail />} />
               <Route path="liked" element={<LikedSongs />} />
               <Route path="artists" element={<TopArtists />} />
               <Route path="songs" element={<TopSongs />} />
@@ -49,6 +54,7 @@ export default function App() {
           </Routes>
         </div>
       </AccessTokenProvider>
+
     </>
   );
 }

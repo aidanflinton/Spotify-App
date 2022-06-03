@@ -17,6 +17,7 @@ function Navbar(props) {
   return (
     <div>
       <nav>
+
         <Button variant="contained" color="success">
           <Link to="/" style={linkStyle}>
             Home
@@ -74,6 +75,7 @@ function Navbar(props) {
             </Link>
           </Button>
         )}
+
       </nav>
       <FormControl>
         <Outlet />
