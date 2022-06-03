@@ -43,14 +43,14 @@ function RapForum(){
         
       <div>
       <Helmet>
-        <title> Country Forum</title>
+        <title> Rap Forum</title>
       </Helmet>
       </div>
       
       <div>
     
   
-      <h1>Country Forum Page</h1>
+      <h1>Rap Forum Page</h1>
       <h2>{console.log(info)}</h2>
       <h1>Message:</h1>
   
