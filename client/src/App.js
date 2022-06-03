@@ -10,7 +10,6 @@ import LikedSongs from "./components/userpreferences/LikedSongs";
 import TopArtists from "./components/userpreferences/TopArtists";
 import TopSongs from "./components/userpreferences/TopSongs";
 import UserProfile from "./components/userinfo/UserProfile";
-import Login from "./components/userinfo/Login";
 import Navbar from "./components/Navbar";
 
 export default function App() {
@@ -30,7 +29,6 @@ export default function App() {
               <Route path="artists" element={<TopArtists />} />
               <Route path="songs" element={<TopSongs />} />
               <Route path="profile" element={<UserProfile />} />
-              <Route path="login" element={<Login />} />
 
               <Route
                 path="*"

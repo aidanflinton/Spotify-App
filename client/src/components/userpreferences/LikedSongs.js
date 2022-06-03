@@ -14,7 +14,7 @@ import {
 const LikedSongs = () => {
   const [likedSongs, setSavedSongs] = useState(null);
 
-  const { accessToken, setAccessToken } = useContext(AccessTokenContext);
+  const { accessToken } = useContext(AccessTokenContext);
 
   useEffect(() => {
     fetch("http://localhost:9000/spotify/saved-tracks?token=" + accessToken)

@@ -26,7 +26,7 @@ function TopArtists() {
 
   const [topArtists, setTopArtists] = useState();
 
-  const { accessToken, setAccessToken } = useContext(AccessTokenContext);
+  const { accessToken } = useContext(AccessTokenContext);
 
   useEffect(() => {
     fetch(

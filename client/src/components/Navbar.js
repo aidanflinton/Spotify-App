@@ -1,6 +1,6 @@
 import "./Navbar.css";
-import { Link, Outlet } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
 
 import { AccessTokenContext } from "../contexts/accessTokenContext";
 
@@ -9,11 +9,38 @@ import FormControl from "@mui/material/FormControl";
 
 function Navbar(props) {
   const { accessToken, setAccessToken } = useContext(AccessTokenContext);
+  const navigate = useNavigate();
 
   const linkStyle = {
     textDecoration: "none",
     color: "white",
   };
+
+  const onClick = (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:9000/spotify")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        window.open(data.url);
+      });
+  };
+
+  useEffect(() => {
+    let code = window.location.href.split("/")[3].split("=")[1];
+    if (code) {
+      fetch("http://localhost:9000/spotify/callback?code=" + code)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.token) {
+            setAccessToken(data.token);
+            navigate("/");
+          }
+        });
+    }
+  }, [navigate, setAccessToken]);
 
   return (
     <div>
@@ -69,10 +96,12 @@ function Navbar(props) {
           </Button>
         )}
         {!accessToken && (
-          <Button variant="contained" color="success">
-            <Link to="/login" style={linkStyle}>
-              Login
-            </Link>
+          <Button
+            onClick={(e) => onClick(e)}
+            variant="contained"
+            color="success"
+          >
+            Login
           </Button>
         )}
       </nav>
