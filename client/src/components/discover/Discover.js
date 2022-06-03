@@ -4,54 +4,61 @@ import axios from "axios";
 import "./Discover.css"
 import { width } from '@mui/system';
 import UserCard from './UserCard';
+import { Helmet } from "react-helmet";
+import { Link, Outlet } from "react-router-dom";
 
 function Discover() {
   const [users, setUsers] = useState();
   const [username, setUsername] = useState("");
   const [foundUser, setFoundUser] = useState();
   const [profile, setProfile] = useState({user_id: null, username: null, password: null});
-  //let users = null;
+  const [likedSongs, setLikedSongs] = useState([]);
+
+  const linkStyle = {
+    textDecoration: "none",
+    color: "white",
+  };
 
   useEffect(() => {
     let subUsers = [];
     axios.get("http://localhost:9000/users/")
     .then((res) => {
-      // console.log(res.data);
-      // console.log(typeof res.data);
+      console.log(res.data);
       res.data.forEach((user) => {
         subUsers.push({user_id: user.user_id, is_public: user.isPublic})
       })
-      //console.log(subUsers);
       subUsers = subUsers.filter((user) => user.is_public);
-      //console.log(subUsers);
       setUsers(subUsers.map((user) => user.user_id).join("\n\n"));
-      // console.log(users);
-      // console.log(users? users : "null");
     })
     .catch((err) => console.log(err))
   }, []);
 
   const getUser = () => {
+    let isPublic = false;
+    let subLikedSongs = [];
+
     if (username.length > 1) {
       users.indexOf(username) != -1? setFoundUser(username): setFoundUser("No user was found");
       if (users.includes(username)) {
         axios.get("http://localhost:9000/users/" + username)
         .then((res) => {
-          // console.log(res.data);
-          // console.log(typeof res.data);
-          // console.log(res.data);
           if (res.data.isPublic) {
               setProfile({user_id: res.data.user_id, username: res.data.username, password: res.data.password});
+              isPublic = true;
           }
-        //   res.data.forEach((user) => {
-        //     subUsers.push({user_id: user.user_id, is_public: user.isPublic})
-        //   })
-        //   //console.log(subUsers);
-        //   subUsers = subUsers.filter((user) => user.is_public);
-        //   //console.log(subUsers);
-        //   setUsers(subUsers.map((user) => user.user_id).join("\n\n"));
-        //   // console.log(users);
-        //   // console.log(users? users : "null");
+        })
+        .catch((err) => console.log(err))
+
+        axios.get("http://localhost:9000/users/" + username + "/liked/")
+        .then((res) => {
+          if (isPublic) {
+              console.log(res.data);
+              res.data.forEach((song) => {
+                subLikedSongs.push({song_id: song.song_id, name: song.track})
+              })
+              setLikedSongs(subLikedSongs.map((song) => song.name));
+              console.log(subLikedSongs);
+          }
         })
         .catch((err) => console.log(err))
       }
@@ -59,23 +66,6 @@ function Discover() {
     else if (username.length == 1) {
       setFoundUser("No user was found")
     }
-    
-    // let subUsers = [];
-    // axios.get("http://localhost:9000/users/username", {user_name: username})
-    // .then((res) => {
-    //   console.log(res.data);
-    //   console.log(typeof res.data);
-    //   res.data.forEach((user) => {
-    //     subUsers.push({user_id: user.user_id, is_public: user.isPublic})
-    //   })
-    //   console.log(subUsers);
-    //   subUsers = subUsers.filter((user) => user.is_public);
-    //   console.log(subUsers);
-    //   setUsers(subUsers.map((user) => user.user_id));
-    //   console.log(users);
-    //   console.log(users? users : "null");
-    // })
-    // .catch((err) => console.log(err))
   }
 
   const changeUsername = (props) => {
@@ -88,30 +78,51 @@ function Discover() {
 
   return (
     <div className = "container">
-      <div className = "header">Discover</div>
+      <div className = "header"><h2>Discover</h2></div>
+      <br />
       <br />
       <div className = "body">
         <div className = "directory">
-          User List
+          <h2>User List</h2>
+          <br />
           <br />
           <div className = "element">
-            {users? users : null}
+            <h4>
+              {users? users : null}
+            </h4>
           </div>
         </div>
         <div className = "search">
-          More User Info
+          <h2>More User Info</h2>
           <br />
-          <Stack>
+          <Stack spacing = {3}>
             <TextField id='outlined-basic' onChange={(input) => changeUsername(input.target.value)} placeholder='Search for User'></TextField>
             <Button variant="contained" onClick={() => getUser()} color="success">Get</Button>
             {/* {username? foundUser: null} */}
-            {foundUser}
-            {foundUser || foundUser === "No user was found"? profile.username: null}
+            <br />
+            User: {foundUser}
+            <br />
+            Spotify Username: {foundUser && foundUser !== "No user was found"? profile.username: null}
+            <br />
+            Liked Songs: {likedSongs !== []? likedSongs: null}
+            <br />
+            {foundUser && foundUser !== "No user was found"? ((
+              <Button variant="contained" color="success">
+                <Link to="/inbox" style={linkStyle}>
+                  Message
+                </Link>
+              </Button>
+            )): null}
           </Stack>
         </div>
+      </div>
+      <div>
+        <Helmet>
+          <title>Discover</title>
+        </Helmet>
       </div>
     </div>
   )
 }
 
-export default Discover
+export default Discover;
