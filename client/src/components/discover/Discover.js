@@ -9,30 +9,57 @@ function Discover() {
   const [users, setUsers] = useState();
   const [username, setUsername] = useState("");
   const [foundUser, setFoundUser] = useState();
-  const [display, setDisplay] = useState("");
+  const [profile, setProfile] = useState({user_id: null, username: null, password: null});
   //let users = null;
 
   useEffect(() => {
     let subUsers = [];
     axios.get("http://localhost:9000/users/")
     .then((res) => {
-      console.log(res.data);
-      console.log(typeof res.data);
+      // console.log(res.data);
+      // console.log(typeof res.data);
       res.data.forEach((user) => {
         subUsers.push({user_id: user.user_id, is_public: user.isPublic})
       })
-      console.log(subUsers);
+      //console.log(subUsers);
       subUsers = subUsers.filter((user) => user.is_public);
-      console.log(subUsers);
+      //console.log(subUsers);
       setUsers(subUsers.map((user) => user.user_id).join("\n\n"));
-      console.log(users);
-      console.log(users? users : "null");
+      // console.log(users);
+      // console.log(users? users : "null");
     })
     .catch((err) => console.log(err))
   }, []);
 
   const getUser = () => {
-    users.includes(username)? setFoundUser(username): setFoundUser("No user was found")
+    if (username.length > 1) {
+      users.indexOf(username) != -1? setFoundUser(username): setFoundUser("No user was found");
+      if (users.includes(username)) {
+        axios.get("http://localhost:9000/users/" + username)
+        .then((res) => {
+          // console.log(res.data);
+          // console.log(typeof res.data);
+          // console.log(res.data);
+          if (res.data.isPublic) {
+              setProfile({user_id: res.data.user_id, username: res.data.username, password: res.data.password});
+          }
+        //   res.data.forEach((user) => {
+        //     subUsers.push({user_id: user.user_id, is_public: user.isPublic})
+        //   })
+        //   //console.log(subUsers);
+        //   subUsers = subUsers.filter((user) => user.is_public);
+        //   //console.log(subUsers);
+        //   setUsers(subUsers.map((user) => user.user_id).join("\n\n"));
+        //   // console.log(users);
+        //   // console.log(users? users : "null");
+        })
+        .catch((err) => console.log(err))
+      }
+    }
+    else if (username.length == 1) {
+      setFoundUser("No user was found")
+    }
+    
     // let subUsers = [];
     // axios.get("http://localhost:9000/users/username", {user_name: username})
     // .then((res) => {
@@ -51,16 +78,13 @@ function Discover() {
     // .catch((err) => console.log(err))
   }
 
-  const displayList = (arr) => {
-    arr.forEach((name) => {
-      return (
-        <>
-          {name}
-          <Button variant="contained" onClick={() => getUser()}>Get</Button>
-        </>        
-      )
-    })
-  }
+  const changeUsername = (props) => {
+    setUsername(props);
+    if (!(props)) {
+      setFoundUser(null);
+      setProfile({user_id: null, username: null, password: null})
+    }
+  } 
 
   return (
     <div className = "container">
@@ -68,15 +92,21 @@ function Discover() {
       <br />
       <div className = "body">
         <div className = "directory">
+          User List
+          <br />
           <div className = "element">
             {users? users : null}
           </div>
         </div>
         <div className = "search">
+          More User Info
+          <br />
           <Stack>
-            <TextField variant='filled' onChange={(input) => setUsername(input.target.value)}></TextField>
-            <Button variant="contained" onClick={() => getUser()}>Get</Button>
+            <TextField id='outlined-basic' onChange={(input) => changeUsername(input.target.value)} placeholder='Search for User'></TextField>
+            <Button variant="contained" onClick={() => getUser()} color="success">Get</Button>
+            {/* {username? foundUser: null} */}
             {foundUser}
+            {foundUser || foundUser === "No user was found"? profile.username: null}
           </Stack>
         </div>
       </div>

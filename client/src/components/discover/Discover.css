@@ -2,7 +2,9 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    left: 0;
+    background-color: white;
+    margin-top: 2em;
+    padding-top: 1em;
 }
 .header {
     text-align: center;
@@ -17,6 +19,7 @@
 
 .element {
     white-space: pre;
+    text-align: left;
 }
 
 .search {
