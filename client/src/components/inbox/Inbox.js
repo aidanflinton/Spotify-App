@@ -14,11 +14,6 @@ function Inbox() {
   const { accessToken, setAccessToken } = useContext(AccessTokenContext);
 
   useEffect(() => {
-    axios.get("http://localhost:9000/spotify/chat?myParam=10", { params: { name: info.display_name }})
-    .then((res) => res.data)
-    .then((text) => setChatter(Object.entries(text[0]).slice(1)))
-    .then(console.log(chatter))
-    .catch((err) => console.log(err))
 
     //fetch person info
     fetch("http://localhost:9000/spotify/me?token=" +
@@ -27,8 +22,20 @@ function Inbox() {
       .then((data) => {
         console.log("personal data: "+ data);
         setInfo(data);
+        getUsers(data.display_name);
       });
+
+    
+
   }, [accessToken])
+
+  const getUsers = (cn)=>{
+    axios.get("http://localhost:9000/spotify/chat?myParam=10", { params: { name: cn }})
+    .then((res) => res.data)
+    .then((text) => setChatter(Object.entries(text[0]).slice(1)))
+    .then(console.log(chatter))
+    .catch((err) => console.log(err))
+  }
 
   console.log(info.display_name)
   const style = {
