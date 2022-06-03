@@ -26,7 +26,7 @@ function TopSongs() {
 
   const [topSongs, setTopSongs] = useState();
 
-  const { accessToken, setAccessToken } = useContext(AccessTokenContext);
+  const { accessToken } = useContext(AccessTokenContext);
 
   useEffect(() => {
     fetch(
@@ -46,7 +46,7 @@ function TopSongs() {
       <Helmet>
         <title>Top Songs</title>
       </Helmet>
-      <Box sx={{ m: 1, minWidth: 120 }}>
+      <Box sx={{ minWidth: 120 }}>
         <FormControl success fullWidth>
           <InputLabel color="success" id="demo-simple-select-label">
             Term

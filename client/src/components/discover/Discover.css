@@ -1,0 +1,24 @@
+.container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    left: 0;
+}
+.header {
+    text-align: center;
+}
+.body {
+    display: flex;
+}
+
+.directory {
+    width: 75%;
+}
+
+.element {
+    white-space: pre;
+}
+
+.search {
+    width: 25%;
+}

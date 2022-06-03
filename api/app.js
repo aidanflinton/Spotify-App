@@ -5,41 +5,29 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var appRouter = require('./routes/spotify');
-const dotenv = require('dotenv').config();
-const forumRouter = require("./routes/forum")
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+var appRouter = require("./routes/spotify");
+const dotenv = require("dotenv").config();
+const forumRouter = require("./routes/forum");
 const rapForum = require("./routes/rapforum");
 const popForum = require("./routes/popforum");
 const countryForum = require("./routes/countryforum");
 
-
 var app = express();
-app.use((req,res,next)=>{
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-  next();
-});
-
-app.use((req,res,next)=>{
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-  next();
-});
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
   next();
- });
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -51,15 +39,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/spotify', appRouter);
-app.use('/forum', forumRouter);
-app.use('/rapforum', rapForum);
-app.use('/popforum', popForum);
-app.use('/countryforum', countryForum)
-
-
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/spotify", appRouter);
+app.use("/forum", forumRouter);
+app.use("/rapforum", rapForum);
+app.use("/popforum", popForum);
+app.use("/countryforum", countryForum);
 
 app.use(express.json());
 app.use(cors({ origin: true }));
