@@ -18,6 +18,7 @@ router.get("/", async (req, res, next) => {
       redirect_uri +
       "&scope=" +
       scope;
+      console.log(url)
     res.status(200).json({ url: url });
   } catch (err) {
     console.log(err);
