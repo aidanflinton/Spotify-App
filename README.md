@@ -7,6 +7,7 @@ To get started developing the application, there are a few commands the develope
 
 `git clone <github repo URL link>`<br /> 
 In the terminal, when the developer is at the right directory that he wants to be in, he should use the command above to pull the code to the local environment. The github repo URL link in this case is https://github.com/aidanflinton/Spotify-App.git The developer should be able to see and access the link by clicking the green Code tab.
+![repo URL](https://i.ibb.co/qDqZ4w7/Screen-Shot-2022-06-06-at-8-57-27-AM.png)
 
 
 `cd <filename>`<br /> 
@@ -41,20 +42,21 @@ Example
 fetch(http://localhost:9000/spotify/) {        
 }, []);
 ```
-
-Would execute a call to the
+Code Example:<br /> 
+![fetch example](https://i.ibb.co/n0nbXSD/Screen-Shot-2022-06-06-at-11-06-52-AM.png)
+Would execute a call to the function within spotify.js
 ```
 get(“/”, async(req, res, next) => {    
 });
 ```
-Function within spotify.js
+Code Example:<br /> 
+![fetch exmaple](https://i.ibb.co/pPgcB7k/Screen-Shot-2022-06-06-at-11-07-04-AM.png)
 
 
 ###### firebase.js<br /> 
 This file creates our firebase app and database interaction tools
-Any references to the firebase api made in the future should be made using a reference to the db object variable 
-Like this
-
+Any references to the firebase api made in the future should be made using a reference to the db object variable like this:<br /> 
+![firebase.js example](https://i.ibb.co/mcmVvCJ/Screen-Shot-2022-06-06-at-11-07-16-AM.png)
 
 ###### Spotify.js<br /> 
 This file is the central API used within this project to log our user in and to access most of the information about them
@@ -68,7 +70,7 @@ Returns the spotify access token that is used for user authentication and redire
 get(“/saved-tracks”)
 get(“/top-tracks”)
 get(“/top-artists”)
- ```
+```
 Each return a json of the logged in user’s liked songs, top listened songs, and top listened artists by calling the official spotify API using the access token retrieved using the / and /callback paths defined earlier. Top tracks and top artists have an optional time_range parameter that will return the relevant information based on short, medium, or long term results
 
 `get(“/me”)`<br /> 
